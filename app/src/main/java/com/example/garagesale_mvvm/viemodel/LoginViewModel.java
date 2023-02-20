@@ -2,70 +2,37 @@ package com.example.garagesale_mvvm.viemodel;
 
 import android.text.TextUtils;
 import android.util.Patterns;
+import android.view.View;
 
 import androidx.databinding.BaseObservable;
 import androidx.databinding.Bindable;
 import androidx.databinding.library.baseAdapters.BR;
+import androidx.lifecycle.MutableLiveData;
+import androidx.lifecycle.ViewModel;
 
 import com.example.garagesale_mvvm.model.LoginModel;
 
-public class LoginViewModel extends BaseObservable {
-    //Creating object of Model class
-    private LoginModel loginmodel;
+public class LoginViewModel extends ViewModel {
 
-    //String variable for toast messages
-    private String successMessage = "Login successful";
-    private String errorMessage = "Email or Password is not valid";
+    //Create Mutable Livedate : Which automaticaly update in the layout
+    public MutableLiveData<String> Email = new MutableLiveData<>();
+    public MutableLiveData<String> Password = new MutableLiveData<>();
+    private MutableLiveData<LoginModel> loginModelMutableLiveData;
 
-    @Bindable
-    //String variable for toast message
-    private String toastMessage = null;
-
-    // Getter/Setter methods for toast message
-
-    public String getToastMessage(){
-        return toastMessage;
+    //Create a Mutable Method to get User details
+    public MutableLiveData<LoginModel> getUserDetails(){
+        if(loginModelMutableLiveData == null){
+            loginModelMutableLiveData = new MutableLiveData<>();
+        }
+        return loginModelMutableLiveData;
     }
 
-    private void setToastMessage(String toastMessage){
-        this.toastMessage = toastMessage;
-       // notifyPropertyChanged(BR.toastMessage);
-    }
-    // Getter/Setter methods for Email
+    // Onclick method for Login button
 
-    @Bindable
-    public String getUserEmail(){
-        return loginmodel.getEmail();
-    }
-    public void setUserEmail(String email){
-        loginmodel.setEmail(email);
-        notifyPropertyChanged(BR._all);
-        //notifyPropertyChanged(BR,userPassword);
-    }
-    public void setUserPassword(String password){
-        loginmodel.setPassword(password);
-        notifyPropertyChanged(BR._all);
-    }
-    public String getUserPassword()
-    {
-        return loginmodel.getPassword();
-    }
-    //Constructor of LoginViewmodel
-    public LoginViewModel(){
-        //instantiate object of loginmodel class
-        loginmodel = new LoginModel("","");
-    }
-    //Actions to be performed when user clicks the Login button
-    public void onButtonClicked(){
-        if (isValid())
-            setToastMessage(successMessage);
-        else
-            setToastMessage(errorMessage);
-    }
-    //Method to keep a check that variable fields must not be kept empty by user
-    public boolean isValid() {
-        return !TextUtils.isEmpty(getUserEmail()) && Patterns.EMAIL_ADDRESS.matcher(getUserEmail()).matches()
-                && getUserPassword().length() > 5;
-    }
+    public void onClick(View view){
+        LoginModel loginModel = new LoginModel(Email.getValue(),Password.getValue());
+        loginModelMutableLiveData.setValue(loginModel);
 
     }
+
+ }

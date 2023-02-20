@@ -1,10 +1,12 @@
 package com.example.garagesale_mvvm.model;
 
+import android.util.Patterns;
+
 import androidx.annotation.Nullable;
 
 public class LoginModel {
     @Nullable
-    String email,password;
+    private String email,password;
     //constructor to initialize the variables
     public LoginModel(String email, String password){
         this.email= email;
@@ -27,5 +29,13 @@ public class LoginModel {
 
     public void setPassword(@Nullable String password) {
         this.password = password;
+    }
+
+    public boolean isEmailvalid(){
+
+        return Patterns.EMAIL_ADDRESS.matcher(getEmail()).matches();
+    }
+    public  boolean isPasswordlength8(){
+        return getPassword().length() > 8;
     }
 }
