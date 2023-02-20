@@ -32,6 +32,7 @@ public class LoginViewModel extends ViewModel {
     public void onClick(View view){
         LoginModel loginModel = new LoginModel(Email.getValue(),Password.getValue());
         loginModelMutableLiveData.setValue(loginModel);
+        System.out.println("Login Clickedddddddddddddddddddddddddddddddddddddddddddddddddddddddddd&&&&&&&&&&&&&");
 
     }
 

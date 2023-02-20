@@ -42,7 +42,6 @@ public class MainActivity extends AppCompatActivity {
                     @Override
                     public void onChanged(LoginModel loginModel) {
                         if (TextUtils.isEmpty(Objects.requireNonNull(loginModel).getEmail())) {
-                            //activityMainBinding.Email.setError();
                             activityMainBinding.inputEmailLogin.setError("Please Enter Email id");
                             activityMainBinding.inputEmailLogin.requestFocus();
                         } else if (!loginModel.isEmailvalid()) {
